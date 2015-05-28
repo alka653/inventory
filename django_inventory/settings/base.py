@@ -83,6 +83,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(MEDIA_ROOT, 'db.sqlite3'),
+        #'NAME': 'inventory',
+        #'ENGINE': 'mysql.connector.django',
+        #'USER': 'root',
+        #'PASSWORD': ''
     }
 }
 

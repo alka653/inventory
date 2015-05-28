@@ -15,11 +15,14 @@ from common.utils import encapsulate
 from .conf import settings as photos_settings
 from .forms import PhotoForm
 from .models import GenericPhoto
+from inventory.models import ItemTemplate
 
 
 def generic_photos(request, model, object_id, max_photos=5, extra_context={}):
-    model_instance = get_object_or_404(model, pk=object_id)
+    model_instance = get_object_or_404(ItemTemplate, pk=1)
+    print "hello"+str(model)+object_id
     photos = GenericPhoto.objects.photos_for_object(model_instance)
+    print "heloo"+str(model_instance)+"hola mundiiiiiiiii"+"  "+str(model)
 
     if request.method == 'POST' and photos.count() < max_photos:
         form = PhotoForm(request.POST, request.FILES)
@@ -83,6 +86,47 @@ def generic_photos(request, model, object_id, max_photos=5, extra_context={}):
 
     return render_to_response('photos/photos.html', extra_context,
         context_instance=RequestContext(request))
+
+
+
+
+
+def generic_photos1(request):
+    model_instance = get_object_or_404(ItemTemplate, pk=1)
+    photos = GenericPhoto.objects.photos_for_object(model_instance)
+    max_photos=100
+    form = PhotoForm()
+    extra_context={'object_name': _(u'person')}
+    extra_context.update({
+        'title': _(u'photos for%(object_name)s%(max_photos)s: %(object)s') % {
+                'object_name': ' %s' % unicode(extra_context['object_name']) if 'object_name' in extra_context else '',
+                'object': model_instance,
+                'max_photos': (_(u' (maximum of %s)') % max_photos if max_photos else '')
+            },
+           
+        'object': model_instance,
+        'object_list': photos,
+        'hide_object': True,
+        'extra_columns': [
+            {'name': _(u'Foto'), 'attribute': encapsulate(lambda x: '<div class="gallery"><a href="%s"><img src="%s" /></a></div>' % (x.get_display_url(), x.get_thumbnail_url()))},
+            {'name': _(u'Main photo'), 'attribute': encapsulate(lambda x: '<span class="famfam active famfam-accept"></span>' if x.main else '-')},
+            {'name': _(u'Nombre integrante'), 'attribute': encapsulate(lambda x: x.title if x.title else '-')}
+        ],
+    })
+
+    
+        # subform_dict is persistent between views, clear it explicitly
+    extra_context.update({'subforms_dict': []})
+    return render_to_response('photos/photos.html', extra_context,
+        context_instance=RequestContext(request))
+    
+
+
+
+
+
+
+
 
 
 def generic_photo_mark_main(request, object_id):

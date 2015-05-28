@@ -143,6 +143,27 @@ class Person(models.Model):
 
         return '%s%s, %s%s' % (self.last_name, second_last_name and second_last_name, self.first_name, second_name)
 
+class RoleInt(models.Model):
+    name_role = models.CharField(max_length=15)
+
+    def __unicode__(self):
+        return self.name_role
+
+class Program(models.Model):
+    name_program = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.name_program
+
+class Integrant(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    role_int = models.ForeignKey('RoleInt')
+    program_int = models.ForeignKey('Program')
+
+    def __unicode__(self):
+        return self.first_name
+
 
 register(ItemState, _(u'Asset states'), ['state__name'])
 register(Item, _(u'Assets'), ['property_number', 'notes', 'serial_number', 'person__first_name', 'person__last_name', 'person__second_last_name', 'person__second_name'])

@@ -11,6 +11,11 @@ state_create = {'text': _('Create new asset state'), 'view': 'state_create', 'fa
 state_edit = {'text': _(u'Edit asset state'), 'view': 'state_update', 'args': 'object.id', 'famfam': 'error'}
 state_delete = {'text': _(u'Delete asset state'), 'view': 'state_delete', 'args': 'object.id', 'famfam': 'error_delete'}
 
+vista_arquitectos = {'text': _('Arquitectos'), 'view': 'arquitecto_list', 'famfam': 'user_go'}
+vista_analistas= {'text': _('Analistas'), 'view': 'analista_list', 'famfam': 'user_gray'}
+vista_asesores= {'text': _('Asesores'), 'view': 'asesores_list', 'famfam': 'user_green'}
+
+
 person_list = {'text': _('View all people'), 'view': 'person_list', 'famfam': 'user_go'}
 person_create = {'text': _('Create new person'), 'view': 'person_create', 'famfam': 'user_add'}
 person_update = {'text': _(u'Edit'), 'view': 'person_update', 'args': 'object.id', 'famfam': 'user_edit'}
@@ -18,7 +23,7 @@ person_delete = {'text': _(u'Delete'), 'view': 'person_delete', 'args': 'object.
 person_photos = {'text': _(u'Add / remove photos'), 'view': 'person_photos', 'args': 'object.id', 'famfam': 'picture_edit'}
 person_assign_item = {'text': _(u'Assign assets'), 'view': 'person_assign_item', 'args': 'object.id', 'famfam': 'computer_go'}
 
-asset_list = {'text': _('View all assets'), 'view': 'item_list', 'famfam': 'computer'}
+asset_list = {'text': _('hola'), 'view': 'item_list1', 'famfam': 'computer'}
 asset_create = {'text': _('Create new asset'), 'view': 'item_create', 'famfam': 'computer_add'}
 asset_orphan_list = {'text': _('Orphan assets'), 'view': 'item_orphans_list'}
 asset_edit = {'text': _(u'Edit'), 'view': 'item_update', 'args': 'object.id', 'famfam': 'computer_edit'}
@@ -47,7 +52,13 @@ register_links(['state_list', 'state_create', 'state_update', 'state_delete'], [
 register_links(State, [state_edit, state_delete])
 
 register_menu([
-    {'text': _('assets'), 'view': 'item_list', 'links': [
+    {'text': _('assets'), 'view': 'item_list1', 'links': [
         asset_list, asset_orphan_list, group_list, person_list
     ], 'famfam': 'computer', 'position': 2},
 ])
+register_menu([
+    {'text': _('Integrantes'), 'view': 'arquitecto_list', 'links': [
+        vista_arquitectos, vista_analistas, vista_asesores
+    ], 'famfam': 'group_edit', 'position': 9},
+])
+
